@@ -1,0 +1,46 @@
+GOC=go build
+GOFLAGS=-a -ldflags '-s'
+CGOR=CGO_ENABLED=0
+VER_NUM=latest
+DOCKER_OPTIONS="--no-cache"
+IMAGE_NAME=mfaltys/beacon-client:$(VER_NUM)
+REDIS_DB_HOST_DIR="/tmp/"
+HOST_IP=192.168.1.9
+
+all: beacon-client
+
+beacon-client: beacon-client.go
+	$(GOC) beacon-client.go
+
+run: beacon-client.go
+	go run beacon-client.go
+
+stat: beacon-client.go
+	$(CGOR) $(GOC) $(GOFLAGS) beacon-client.go
+
+install: stat
+	cp beacon-client /usr/bin
+
+docker:
+	$(MAKE) stat
+	mkdir stage.tmp/
+	cp beacon-client stage.tmp/
+	cp auth stage.tmp/
+	cp deps/Dockerfile stage.tmp/
+	cp config.gcfg stage.tmp/
+	cd stage.tmp/ && \
+		sudo docker build $(DOCKER_OPTIONS) -t $(IMAGE_NAME) .
+	@echo "$(IMAGE_NAME) built"
+
+dockerrun:
+	sudo docker run \
+		-d \
+		--name beacon-client \
+		--add-host dockerhost:$(HOST_IP) \
+		mfaltys/beacon-client
+	sudo docker logs -f beacon-client
+
+clean:
+	rm -f beacon-client
+	rm -rf stage.tmp/
+#CGO_ENABLED=0 go build -a -ldflags '-s' beacon-client.go
