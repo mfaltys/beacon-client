@@ -2,4 +2,4 @@
 	loglevel		= "cluster"
 	endpoint		= "https://beacon.unixvoid.com/update"
 	authfile		= "auth"
-	hostdevice		= "virbr0"
+	hostdevice		= "docker"
