@@ -10,6 +10,10 @@ CURRENT_DIR=$(shell pwd)
 
 all: beacon-client
 
+dependencies:
+	go get gopkg.in/gcfg.v1
+	go get git.unixvoid.com/mfaltys/glogger
+
 beacon-client: beacon-client.go
 	$(GOC) beacon-client.go
 
