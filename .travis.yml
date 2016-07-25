@@ -14,13 +14,11 @@ install:
 
 script:
   - make stat
-  - make clean
-  - docker pull alpine:latest
-  - make docker
 
 after_success:
-  - echo $testval
-  - if [ "$TRAVIS_BRANCH" == "develop" ]; then
+    make clean
+    docker pull alpine:latest
+    make docker
     docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-    ocker push unixvoid/beacon-client:develop;
-    fi
+    docker tag unixvoid/beacon-client unixvoid/beacon-client:develop
+    docker push unixvoid/beacon-client:develop;
