@@ -3,7 +3,7 @@ GOFLAGS=-a -ldflags '-s'
 CGOR=CGO_ENABLED=0
 VER_NUM=latest
 DOCKER_OPTIONS="--no-cache"
-IMAGE_NAME=mfaltys/beacon-client:$(VER_NUM)
+IMAGE_NAME=unixvoid/beacon-client:$(VER_NUM)
 REDIS_DB_HOST_DIR="/tmp/"
 HOST_IP=192.168.1.9
 CURRENT_DIR=$(shell pwd)
