@@ -30,9 +30,9 @@ docker:
 	$(MAKE) stat
 	mkdir stage.tmp/
 	cp beacon-client stage.tmp/
-	#cp auth stage.tmp/
+	cp auth stage.tmp/
 	cp deps/Dockerfile stage.tmp/
-	#cp config.gcfg stage.tmp/
+	cp config.gcfg stage.tmp/
 	cd stage.tmp/ && \
 		sudo docker build $(DOCKER_OPTIONS) -t $(IMAGE_NAME) .
 	@echo "$(IMAGE_NAME) built"
@@ -44,7 +44,7 @@ dockerrun:
 		--add-host dockerhost:$(HOST_IP) \
 		-v $(CURRENT_DIR)/config.gcfg:/config.gcfg:ro \
 		-v $(CURRENT_DIR)/auth:/auth:ro \
-		mfaltys/beacon-client
+		$(IMAGE_NAME)
 	sudo docker logs -f beacon-client
 	sudo docker rm beacon-client
 

@@ -69,6 +69,7 @@ func main() {
 		}
 
 		for _, iface := range list {
+			glogger.Debug.Println(iface.Name)
 			if iface.Name == config.Beaconclient.HostDevice {
 				addrs, err := iface.Addrs()
 				if err != nil {

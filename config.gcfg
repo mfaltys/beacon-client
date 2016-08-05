@@ -1,5 +1,5 @@
 [beaconclient]
-	loglevel		= "cluster"
+	loglevel		= "info"
 	endpoint		= "https://beacon.unixvoid.com/update"
 	authfile		= "auth"
 	hostdevice		= "docker"
