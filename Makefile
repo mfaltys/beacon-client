@@ -7,6 +7,7 @@ IMAGE_NAME=unixvoid/beacon-client:$(VER_NUM)
 REDIS_DB_HOST_DIR="/tmp/"
 HOST_IP=192.168.1.9
 CURRENT_DIR=$(shell pwd)
+GIT_HASH=$(shell git rev-parse HEAD | head -c 10)
 
 all: beacon-client
 
@@ -21,7 +22,8 @@ run: beacon-client.go
 	go run beacon-client.go
 
 stat: beacon-client.go
-	$(CGOR) $(GOC) $(GOFLAGS) beacon-client.go
+	mkdir bin/
+	$(CGOR) $(GOC) $(GOFLAGS) -o bin/beacon-client-$(GIT_HASH)-linux-amd64 beacon-client/*.go
 
 install: stat
 	cp beacon-client /usr/bin
@@ -51,4 +53,5 @@ dockerrun:
 clean:
 	rm -f beacon-client
 	rm -rf stage.tmp/
+	rm -rf bin/
 #CGO_ENABLED=0 go build -a -ldflags '-s' beacon-client.go
