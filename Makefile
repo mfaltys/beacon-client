@@ -23,7 +23,7 @@ run: beacon-client.go
 
 stat: beacon-client.go
 	mkdir bin/
-	$(CGOR) $(GOC) $(GOFLAGS) -o bin/beacon-client-$(GIT_HASH)-linux-amd64 beacon-client/*.go
+	$(CGOR) $(GOC) $(GOFLAGS) -o bin/beacon-client-$(GIT_HASH)-linux-amd64 beacon-client.go
 
 install: stat
 	cp beacon-client /usr/bin
